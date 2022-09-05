@@ -7,6 +7,6 @@ restore0Dir
 
 python3 createMesh.py
 runApplication blockMesh
-runApplication $(getApplication)
+#runApplication $(getApplication)
 
 #------------------------------------------------------------------------------

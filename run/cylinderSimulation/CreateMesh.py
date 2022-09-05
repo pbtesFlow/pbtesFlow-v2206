@@ -107,7 +107,7 @@ class pyMesh(object):
         ]
         return boundary_array
 
-    def write_block_mesh_dict(self, filename="system/blockMeshDict"):
+    def write_block_mesh_dict(self, filename="blockMeshDict"):
         points_data = self._create_points_data()
         entries = []
         entries.append('scale   1;\n')
@@ -140,7 +140,7 @@ class pyMesh(object):
         entries.append(");\n")
 
         dirName = os.getcwd() + ""
-        writer = OpenFoamDataWriter(dirName, "", filename, entries)
+        writer = OpenFoamDataWriter(dirName, "system/", filename, entries)
 
 if __name__ == '__main__':
     mesh = pyMesh()    
