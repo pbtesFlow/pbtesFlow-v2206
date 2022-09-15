@@ -1,0 +1,6 @@
+--2022-09-12 12:57:58--  https://scholar.google.com/scholar?q=OpenFOAM
+Resolving scholar.google.com (scholar.google.com)... 142.250.74.132
+Connecting to scholar.google.com (scholar.google.com)|142.250.74.132|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2022-09-12 12:58:00 ERROR 403: Forbidden.
+
