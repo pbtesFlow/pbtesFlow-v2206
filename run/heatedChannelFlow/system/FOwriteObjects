@@ -11,7 +11,7 @@ writeObjects
 type            writeObjects;
 libs            ("libutilityFunctionObjects.so");
 
-objects         (rho kappa cp);
+objects         (rho);
 
 writeControl    writeTime;
 }
