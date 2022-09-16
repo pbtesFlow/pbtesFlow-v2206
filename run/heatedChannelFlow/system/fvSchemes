@@ -16,7 +16,7 @@ FoamFile
 
 ddtSchemes
 {
-    default         Euler;
+    default         bounded Euler;
 }
 
 gradSchemes
@@ -32,14 +32,7 @@ divSchemes
     energy          Gauss upwind;
     div(phi,h)      $energy;
     div(phi,e)      $energy;
-    div(phi,K)      Gauss linear;
-    div(phi,Ekp)    Gauss linear;
-
-    turbulence      Gauss upwind;
-    div(phi,k)      $turbulence;
-    div(phi,epsilon) $turbulence;
-    div(phi,R)      $turbulence;
-    div(R)          Gauss linear;
+    div(phi,K)      Gauss upwind;
 
     div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 }

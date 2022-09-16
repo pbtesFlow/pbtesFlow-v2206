@@ -5,16 +5,22 @@
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-
-writeObjects
+FoamFile
 {
-type            writeObjects;
-libs            ("libutilityFunctionObjects.so");
-
-objects         (rho);
-
-writeControl    writeTime;
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvOptions;
 }
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+limitTAir
+{
+    type       limitTemperature;
+    min        300;
+    max        800;
+    selectionMode all;
+    active      yes;
+}
 
 // ************************************************************************* //

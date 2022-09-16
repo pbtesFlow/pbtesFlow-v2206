@@ -22,13 +22,13 @@ boundaryField
 {
     bottom
     {
-        type            fixedValue;
+        type            fixedFluxPressure;
         value           uniform 1e5;
     }
 
     top
     {
-        type            fixedFluxPressure;
+        type            fixedValue;
         value           uniform 1e5;
     }
 
@@ -36,6 +36,17 @@ boundaryField
     {
         type            fixedFluxPressure;
         value           uniform 1e5;
+    }
+
+    walls_top
+    {
+        type            fixedFluxPressure;
+        value           uniform 1e5;
+    }
+
+    defaultFaces
+    {
+        type            empty;
     }
 }
 

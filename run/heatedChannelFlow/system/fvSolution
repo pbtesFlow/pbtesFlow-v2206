@@ -29,7 +29,7 @@ solvers
         solver          PCG;
         preconditioner  DIC;
         tolerance       1e-8;
-        relTol          0.01;
+        relTol          1e-3;
     }
 
     p_rghFinal
@@ -42,8 +42,8 @@ solvers
     {
         solver          PBiCGStab;
         preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0.1;
+        tolerance       1e-8;
+        relTol          1e-3;
     }
 
     "(U|h|e|R)Final"
@@ -59,8 +59,6 @@ PIMPLE
     nOuterCorrectors 1;
     nCorrectors     3;
     nNonOrthogonalCorrectors 0;
-//    pRefCell        0;
-//    pRefValue       1e5;
 }
 
 

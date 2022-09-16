@@ -46,24 +46,11 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+maxCo           0.8;
 
 functions
 {
-    htc
-    {
-        type            heatTransferCoeff;
-        libs            (fieldFunctionObjects);
-        field           T;
-        writeControl    outputTime;
-        writeInterval   1;
-        htcModel        fixedReferenceTemperature;
-        patches         (walls);
-        TRef            373;
-    }
-
-
-    #include "FOwriteObjects"
+    #include "FOwriteRhoField"
 }
 
 

@@ -16,25 +16,40 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 300;
+T_initial 800;
+T_inlet 300;
+
+internalField   uniform $T_initial;
 
 boundaryField
 {
     bottom
     {
         type            fixedValue;
-        value           uniform 300;
+        value           uniform $T_inlet;
     }
 
     top
     {
-        type            zeroGradient;
+        type            inletOutlet;
+        inletValue      uniform $T_initial;
     }
 
     walls
     {
-        type            fixedValue;
-        value           uniform 600;
+        type            zeroGradient;
+        value           uniform $T_initial;
+    }
+
+    walls_top
+    {
+        type            zeroGradient;
+        value           uniform $T_initial;
+    }
+
+    defaultFaces
+    {
+        type            empty;
     }
 }
 

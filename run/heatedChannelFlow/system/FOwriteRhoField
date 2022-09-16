@@ -8,13 +8,10 @@
 
 writeObjects
 {
-type            writeObjects;
-libs            ("libutilityFunctionObjects.so");
-
-objects         (rho kappa cp);
-
-writeControl    writeTime;
+    type            writeObjects;
+    libs            ("libutilityFunctionObjects.so");
+    objects         (rho);
+    writeControl    writeTime;
 }
-
 
 // ************************************************************************* //
