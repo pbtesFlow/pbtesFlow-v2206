@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2206                                 |
+|  \\    /   O peration     | Version:  v2112                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -16,29 +16,40 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 300;
+T_initial 800;
+T_inlet 300;
+
+internalField   uniform $T_initial;
 
 boundaryField
 {
-    floor
+    bottom
     {
         type            fixedValue;
-        value           uniform 300;
+        value           uniform $T_inlet;
     }
 
-    ceiling
+    top
     {
-        type            lumpedMassWallTemperature;
-        kappaMethod     fluidThermo;
-        kappa           none;
-        mass            1000;
-        Cp              4100;
-        value           uniform 300;
+        type            inletOutlet;
+        inletValue      uniform $T_initial;
     }
 
-    fixedWalls
+    walls
     {
         type            zeroGradient;
+        value           uniform $T_initial;
+    }
+
+    walls_top
+    {
+        type            zeroGradient;
+        value           uniform $T_initial;
+    }
+
+    defaultFaces
+    {
+        type            empty;
     }
 }
 
