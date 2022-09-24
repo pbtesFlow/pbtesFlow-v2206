@@ -21,6 +21,8 @@ porousZone
     explicitPorositySourceCoeffs
     {
         type            DarcyForchheimer;
+        selectionMode   cellZone;
+        cellZone        porosity;
 
         DarcyForchheimerCoeffs
         {
