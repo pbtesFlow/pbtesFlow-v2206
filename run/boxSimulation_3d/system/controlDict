@@ -9,42 +9,48 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      T;
+    class       dictionary;
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 1 0 0 0];
+application     buoyantPimpleFoam;
 
-T_initial 800;
-T_inlet 300;
+startFrom       startTime;
 
-internalField   uniform 800;
+startTime       0;
 
-boundaryField
+stopAt          endTime;
+
+endTime         120;
+
+deltaT          0.01;
+
+writeControl    adjustableRunTime;
+
+writeInterval   1;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+maxCo           0.8;
+
+functions
 {
-    bottom
-    {
-        type            fixedValue;
-        value           uniform 300;
-    }
-
-    top
-    {
-        type            zeroGradient;
-        value           uniform 800;
-    }
-
-    walls
-    {
-        type            zeroGradient;
-        value           uniform 800;
-    }
-
-    defaultFaces
-    {
-        type            empty;
-    }
+    #include "FOwriteRhoField"
 }
 
 

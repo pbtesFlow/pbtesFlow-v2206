@@ -9,43 +9,13 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      T;
+    class       uniformDimensionedVectorField;
+    object      g;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 1 0 0 0];
-
-T_initial 800;
-T_inlet 300;
-
-internalField   uniform 800;
-
-boundaryField
-{
-    bottom
-    {
-        type            fixedValue;
-        value           uniform 300;
-    }
-
-    top
-    {
-        type            zeroGradient;
-        value           uniform 800;
-    }
-
-    walls
-    {
-        type            zeroGradient;
-        value           uniform 800;
-    }
-
-    defaultFaces
-    {
-        type            empty;
-    }
-}
+dimensions      [0 1 -2 0 0 0 0];
+value           (0 -9.81 0);
 
 
 // ************************************************************************* //
