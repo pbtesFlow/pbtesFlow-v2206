@@ -50,15 +50,15 @@ class pyMesh(object):
     def _create_one_level_block_data(self):
 
         return [
-            "hex (0 1 5 4 8 9 13 12) pipe (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (0 1 5 4 8 9 13 12) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (1 2 6 5 9 10 14 13) pipe (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (1 2 6 5 9 10 14 13) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (2 3 7 6 10 11 15 14) pipe (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (2 3 7 6 10 11 15 14) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (3 0 4 7 11 8 12 15) pipe (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (3 0 4 7 11 8 12 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (4 5 6 7 12 13 14 15) pipe (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (4 5 6 7 12 13 14 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
         ]
 

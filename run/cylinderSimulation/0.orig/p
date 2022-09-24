@@ -38,12 +38,6 @@ boundaryField
         value           $internalField;
     }
 
-    walls_top
-    {
-        type            calculated;
-        value           $internalField;
-    }
-
     defaultFaces
     {
         type            empty;

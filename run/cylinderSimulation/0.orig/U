@@ -28,19 +28,12 @@ boundaryField
 
     top
     {
-        type            inletOutlet;
-        inletValue      uniform (0 0 0);
-        value           uniform (0 0 0);
+        type            zeroGradient;
     }
 
     walls
     {
         type            noSlip;
-    }
-
-    walls_top
-    {
-        type            slip;
     }
 
     defaultFaces

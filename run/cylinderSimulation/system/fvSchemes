@@ -34,7 +34,7 @@ divSchemes
     div(phi,e)      $energy;
     div(phi,K)      Gauss upwind;
 
-    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear s;
 }
 
 laplacianSchemes

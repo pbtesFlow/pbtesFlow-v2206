@@ -5,9 +5,9 @@ cd "${0%/*}" || exit                                # Run from this directory
 
 restore0Dir
 
-python3 createMesh.py
-
 touch case.foam
+
+python3 CreateMesh.py
 
 runApplication blockMesh
 
