@@ -26,7 +26,7 @@ porousZone
 
         DarcyForchheimerCoeffs
         {
-            d   d [0 -2 0 0 0 0 0] (5e7 -1000 -1000);
+            d   d [0 -2 0 0 0 0 0] (5e7 5e7 5e7);
             f   f [0 -1 0 0 0 0 0] (0 0 0);
 
             coordinateSystem

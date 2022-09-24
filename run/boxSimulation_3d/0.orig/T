@@ -16,9 +16,6 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-T_initial 800;
-T_inlet 300;
-
 internalField   uniform 800;
 
 boundaryField
