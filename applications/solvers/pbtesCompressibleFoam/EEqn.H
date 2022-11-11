@@ -20,6 +20,7 @@
         rho*(U&g)
       // + radiation->Sh(thermo, he)
       + fvOptions(rho, he)
+      + S
     );
 
     EEqn.relax();

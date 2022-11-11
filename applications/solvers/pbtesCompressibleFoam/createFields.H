@@ -20,6 +20,34 @@ volScalarField rho
     thermo.rho()
 );
 
+Info<< "Reading field TBed\n" << endl;
+volScalarField TBed
+(
+    IOobject
+    (
+        "TBed",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+Info<< "Reading field phib\n" << endl;
+volScalarField phib
+(
+    IOobject
+    (
+        "phib",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
 volScalarField& p = thermo.p();
 
 Info<< "Reading field U\n" << endl;
@@ -52,10 +80,11 @@ autoPtr<compressible::turbulenceModel> turbulence
     )
 );
 
-
+#include "readBedProperties.H"
 #include "readGravitationalAcceleration.H"
 #include "readhRef.H"
 #include "gh.H"
+
 
 
 Info<< "Reading field p_rgh\n" << endl;

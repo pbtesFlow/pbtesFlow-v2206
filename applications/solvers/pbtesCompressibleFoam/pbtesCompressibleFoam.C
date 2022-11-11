@@ -157,6 +157,10 @@ int main(int argc, char *argv[])
 
         rho = thermo.rho();
 
+        S = h*A*(T-Tbed)*dt
+
+        #include "TBedEqn.H"
+
         runTime.write();
 
         runTime.printExecutionTime(Info);

@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      turbulenceProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+rho_b   5150; //density (kg/m^3)
+cp_b    1130; //specific heat capacity (J/(kg*K))
+r_b     0.005; //radius of sphere (m)
+geo_b   1; //geometric factor describing non-sphereness
+h       200; //convective heat transfer coefficient (W/(m^2*K))
+
+// ************************************************************************* //
