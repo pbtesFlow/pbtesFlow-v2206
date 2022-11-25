@@ -44,13 +44,13 @@ Description
 
 #include "fvCFD.H"
 #include "dynamicFvMesh.H"
-#include "isoAdvection.H"
+//#include "isoAdvection.H"
 #include "EulerDdtScheme.H"
 #include "localEulerDdtScheme.H"
 #include "CrankNicolsonDdtScheme.H"
-#include "subCycle.H"
-#include "immiscibleIncompressibleTwoPhaseMixture.H"
-#include "incompressibleInterPhaseTransportModel.H"
+//#include "subCycle.H"
+//#include "immiscibleIncompressibleTwoPhaseMixture.H"
+//#include "incompressibleInterPhaseTransportModel.H"
 #include "pimpleControl.H"
 #include "fvOptions.H"
 #include "CorrectPhi.H"
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     #include "initContinuityErrs.H"
     #include "createDyMControls.H"
     #include "createFields.H"
-    #include "initCorrectPhi.H"
+    //#include "initCorrectPhi.H"
     #include "createUfIfPresent.H"
 
     #include "porousCourantNo.H"
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     {
         #include "readDyMControls.H"
         #include "porousCourantNo.H"
-        #include "porousAlphaCourantNo.H"
+        //#include "porousAlphaCourantNo.H"
         #include "setDeltaT.H"
 
         ++runTime;
@@ -101,10 +101,10 @@ int main(int argc, char *argv[])
         {
             if (pimple.firstIter() || moveMeshOuterCorrectors)
             {
-                if (isA<dynamicRefineFvMesh>(mesh))
-                {
-                    advector.surf().reconstruct();
-                }
+                // if (isA<dynamicRefineFvMesh>(mesh))
+                // {
+                //     advector.surf().reconstruct();
+                // }
 
                 mesh.update();
 
@@ -113,16 +113,16 @@ int main(int argc, char *argv[])
                     gh = (g & mesh.C()) - ghRef;
                     ghf = (g & mesh.Cf()) - ghRef;
 
-                    if (isA<dynamicRefineFvMesh>(mesh))
-                    {
-                        advector.surf().mapAlphaField();
-                        alpha2 = 1.0 - alpha1;
-                        alpha2.correctBoundaryConditions();
-                        rho == alpha1*rho1 + alpha2*rho2;
-                        rho.correctBoundaryConditions();
-                        rho.oldTime() = rho;
-                        alpha2.oldTime() = alpha2;
-                    }
+                    // if (isA<dynamicRefineFvMesh>(mesh))
+                    // {
+                    //     advector.surf().mapAlphaField();
+                    //     alpha2 = 1.0 - alpha1;
+                    //     alpha2.correctBoundaryConditions();
+                    //     rho == alpha1*rho1 + alpha2*rho2;
+                    //     rho.correctBoundaryConditions();
+                    //     rho.oldTime() = rho;
+                    //     alpha2.oldTime() = alpha2;
+                    // }
 
                     MRF.update();
 
@@ -147,8 +147,8 @@ int main(int argc, char *argv[])
                 }
             }
 
-            #include "alphaControls.H"
-            #include "alphaEqnSubCycle.H"
+            // #include "alphaControls.H"
+            // #include "alphaEqnSubCycle.H"
 
             mixture.correct();
 

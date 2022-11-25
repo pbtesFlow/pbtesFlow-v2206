@@ -54,6 +54,8 @@ volScalarField porosity
     mesh
 );
 
+scalarField coord = 2*((c - ctr) & y_)/((bb.max() - bb.min()) & y_);
+
 Info<< "Reading field U\n" << endl;
 volVectorField U
 (
@@ -83,6 +85,8 @@ autoPtr<incompressible::turbulenceModel> turbulence
 (
     incompressible::turbulenceModel::New(U, phi, laminarTransport)
 );
+
+#include "readBedProperties.H"
 
 #include "createMRF.H"
 #include "createFvOptions.H"

@@ -22,6 +22,8 @@
     mixture.correct();
 }
 
+rhoPhi = rhof*phi/fvc::interpolate(porosity)
+
 scalar domainFraction = 0;
 if (porosityEnabled)
 {

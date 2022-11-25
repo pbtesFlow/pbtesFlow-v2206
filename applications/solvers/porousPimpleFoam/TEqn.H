@@ -2,32 +2,32 @@ if (porosityEnabled)
 {
     const volScalarField& porosity = tporosity.cref();
 
-    fvScalarMatrix TfEqn
+    fvScalarMatrix hfEqn
     (
-        fvm::ddt(Tf)
-        + fvm::div(phi, Tf)
-        - fvm::laplacian(DTf, Tf)
+        fvm::ddt(rhof*cpf,Tf)
+        + fvm::div(fvc::interpolate(rhof*cpf)*phi, Tf)
+        - fvm::laplacian(kf, Tf)
         ==
         fvOptions(Tf)
-        + (1-porosity)*Cf*(Ts-Tf)
+        + h*porosity.internalField()*mesh.V()*3.0/rp * (Tf-Ts)
     );
 
-    TfEqn.relax();
-    fvOptions.constrain(TfEqn);
-    TfEqn.solve();
+    hfEqn.relax();
+    fvOptions.constrain(hfEqn);
+    hfEqn.solve();
     fvOptions.correct(Tf);
 
-    fvScalarMatrix TsEqn
-    (
-        fvm::ddt(Ts)
-        - fvm::laplacian(DTs, Ts)
-        ==
-        fvOptions(Ts)
-        + porosity*Cs*(Tf-Ts)
-    );
+    // fvScalarMatrix hsEqn
+    // (
+    //     fvm::ddt(rho*cpf,Ts)
+    //     - fvm::laplacian(DTs, Ts)
+    //     ==
+    //     fvOptions(Ts)
+    //    //+ porosity*Cs*(Tf-Ts)
+    // );
 
-    TsEqn.relax();
-    fvOptions.constrain(TsEqn);
-    TsEqn.solve();
-    fvOptions.correct(Ts);
+    // TsEqn.relax();
+    // fvOptions.constrain(TsEqn);
+    // TsEqn.solve();
+    // fvOptions.correct(Ts);
 }

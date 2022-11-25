@@ -28,33 +28,69 @@ volVectorField U
     mesh
 );
 
-#include "createPhi.H"
-
-
 Info<< "Reading transportProperties\n" << endl;
-immiscibleIncompressibleTwoPhaseMixture mixture(U, phi);
 
-volScalarField& alpha1(mixture.alpha1());
-volScalarField& alpha2(mixture.alpha2());
-
-const dimensionedScalar& rho1 = mixture.rho1();
-const dimensionedScalar& rho2 = mixture.rho2();
-
-
-// Need to store rho for ddt(rho, U)
-volScalarField rho
+IOdictionary transportProperties
 (
     IOobject
     (
-        "rho",
+        "transportProperties",
+        runTime.constant(),
+        mesh,
+        IOobject::MUST_READ_IF_MODIFIED,
+        IOobject::NO_WRITE
+    )
+);
+
+#include "createPhi.H"
+
+Info<< "Reading thermal diffusivity of fluid kf\n" << endl;
+dimensionedScalar kf("kf", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
+
+Info<< "Reading thermal diffusivity of stone kf\n" << endl;
+dimensionedScalar ks("ks", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
+
+Info<< "Reading heat tranfer coefficient, h (W/(m^2*K))\n" << endl;
+dimensionedScalar h("h", dimless/dimTime, transportProperties);
+
+Info<< "Reading specific heat capacity of fluid (J/kg*K)\n" << endl;
+dimensionedScalar cpf("dp", dimLength*dimLength/(dimTemperature*dimTime*dimTime), transportProperties);
+
+Info<< "Reading specific heat capacity of stone (J/kg*K)\n" << endl;
+dimensionedScalar cps("dp", dimLength*dimLength/(dimTemperature*dimTime*dimTime), transportProperties);
+
+Info<< "Reading stone radius (assuming spheres and uniform size (m)\n" << endl;
+dimensionedScalar rp("rp", dimLength, transportProperties);
+
+Info<< "Reading density of fluid (kg/m^3)\n" << endl;
+dimensionedScalar rhof_value("rhof_value", dimDensity, transportProperties);
+
+Info<< "Reading density of stone (kg/m^3)\n" << endl;
+dimensionedScalar rhos_value("rhos_value", dimDensity, transportProperties);
+
+volScalarField rhof
+(
+    IOobject
+    (
+        "rhof",
         runTime.timeName(),
         mesh,
         IOobject::READ_IF_PRESENT
     ),
-    alpha1*rho1 + alpha2*rho2
+    rhof_value
 );
-rho.oldTime();
 
+volScalarField rhos
+(
+    IOobject
+    (
+        "rhos",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT
+    ),
+    rhos_value
+);
 
 // Mass flux
 surfaceScalarField rhoPhi
@@ -67,14 +103,13 @@ surfaceScalarField rhoPhi
         IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
-    fvc::interpolate(rho)*phi
+    fvc::interpolate(rhof)*phi
 );
 
-
-typedef incompressibleInterPhaseTransportModel
-    <
-        immiscibleIncompressibleTwoPhaseMixture
-    > transportModelType;
+// typedef incompressibleInterPhaseTransportModel
+//     <
+//         immiscibleIncompressibleTwoPhaseMixture
+//     > transportModelType;
 
 autoPtr<transportModelType> turbulence
 (
@@ -83,7 +118,6 @@ autoPtr<transportModelType> turbulence
         rho, U, phi, rhoPhi, mixture
     )
 );
-
 
 #include "readGravitationalAcceleration.H"
 #include "readhRef.H"
@@ -162,33 +196,15 @@ volScalarField Ts
     mesh
 );
 
-Info<< "Reading transportProperties\n" << endl;
-
-IOdictionary transportProperties
+volScalarField Astone
 (
     IOobject
     (
-        "transportProperties",
-        runTime.constant(),
+        "Astone",
+        runTime.timeName(),
         mesh,
-        IOobject::MUST_READ_IF_MODIFIED,
-        IOobject::NO_WRITE
-    )
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
 );
-
-
-Info<< "Reading diffusivity DTf\n" << endl;
-
-dimensionedScalar DTf("DTf", dimViscosity, transportProperties);
-
-Info<< "Reading diffusivity DTs\n" << endl;
-
-dimensionedScalar DTs("DTs", dimViscosity, transportProperties);
-
-Info<< "Reading Cf\n" << endl;
-
-dimensionedScalar Cf("Cf", dimless/dimTime, transportProperties);
-
-Info<< "Reading Cs\n" << endl;
-
-dimensionedScalar Cs("Cs", dimless/dimTime, transportProperties);

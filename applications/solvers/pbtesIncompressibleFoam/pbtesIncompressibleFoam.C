@@ -124,7 +124,6 @@ int main(int argc, char *argv[])
         turbulence->correct();
 
         runTime.write();
-
         runTime.printExecutionTime(Info);
     }
 
