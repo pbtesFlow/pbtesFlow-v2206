@@ -2,11 +2,12 @@
 
     fvVectorMatrix UEqn
     (
-        fvm::ddt(rho, U) + fvm::div(rhoPhi, U)
-      + MRF.DDt(rho, U)
-      + turbulence->divDevRhoReff(rho, U)
-     ==
-        fvOptions(rho, U)
+        fvm::ddt(rhof, U) + fvm::div(rhof*phi/porosityf, U)
+      - fvm::laplacian(muf, U)
+//      + MRF.DDt(rho, U)
+//      + turbulence->divDevRhoReff(rho, U)
+//     ==
+//        fvOptions(rho, U)
     );
 
     #include "UEqnAddPorosity.H"
@@ -24,10 +25,10 @@
             fvc::reconstruct
             (
                 (
-                    mixture.surfaceTensionForce()
-                  - ghf*fvc::snGrad(rho)
+//                    mixture.surfaceTensionForce()
+//                  - ghf*fvc::snGrad(rho)
                   - fvc::snGrad(p_rgh)
-                ) * mesh.magSf()
+                ) * mesh.magSf() //Correct with Sf here even with porosity? 
             )
         );
 

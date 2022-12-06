@@ -40,9 +40,9 @@ scalar meanCoNum = 0;
         fvc::surfaceSum(mag(phi))().primitiveField()
     );
 
-    if (porosityEnabled)
+//    if (porosityEnabled)
     {
-        const volScalarField& porosity = tporosity.cref();
+//        const volScalarField& porosity = tporosity.cref();
 
         CoNum =
             0.5*gMax(sumPhi/mesh.V().field()/porosity)
@@ -52,6 +52,7 @@ scalar meanCoNum = 0;
             0.5*(gSum(sumPhi)/gSum(mesh.V().field()*porosity))
            *runTime.deltaTValue();
     }
+/*
     else
     {
         CoNum = 0.5*gMax(sumPhi/mesh.V().field())*runTime.deltaTValue();
@@ -59,6 +60,7 @@ scalar meanCoNum = 0;
         meanCoNum =
             0.5*(gSum(sumPhi)/gSum(mesh.V().field()))*runTime.deltaTValue();
     }
+*/
 }
 
 Info<< "Courant Number mean: " << meanCoNum

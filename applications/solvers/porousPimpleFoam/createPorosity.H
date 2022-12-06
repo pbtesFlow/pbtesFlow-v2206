@@ -11,10 +11,12 @@ IOdictionary porosityProperties
     )
 );
 
+/*
 const bool porosityEnabled
 (
     porosityProperties.getOrDefault<bool>("porosityEnabled", false)
 );
+
 
 tmp<volScalarField> tporosity;
 if (porosityEnabled)
@@ -32,3 +34,19 @@ if (porosityEnabled)
         mesh
     );
 }
+*/
+
+volScalarField porosity
+(
+    IOobject
+    (
+        "porosity",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+surfaceScalarField porosityf(fvc::interpolate(porosity));

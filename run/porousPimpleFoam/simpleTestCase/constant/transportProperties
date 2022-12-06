@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2206                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Fluid
+
+rhof    1.2;
+
+cpf     700;
+
+kf      0;
+
+Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+
+mu      1.825e-05;
+
+Tmu     293;
+
+mu2     1.963e-5;
+
+Tmu2    343;
+
+//Source for mu temperature dependency:
+//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
+
+// Solid
+
+rhos    3000;
+
+cps     0.1;//1130;
+
+ks      10;
+
+Cs      0;
+
+
+
+// ************************************************************************* //

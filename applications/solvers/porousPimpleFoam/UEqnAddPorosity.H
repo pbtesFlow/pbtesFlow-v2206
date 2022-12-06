@@ -3,9 +3,9 @@
 // Investigations on the porous media equations and resistance
 // coefficients for coastal structures. Coastal Engineering, 84, 56-72.
 
-if (porosityEnabled)
+//if (porosityEnabled)
 {
-    const volScalarField& porosity = tporosity.cref();
+//    const volScalarField& porosity = tporosity.cref();
 
     const word porosityModel("JensenEtAl2014");
     const dictionary& dict =
@@ -15,17 +15,17 @@ if (porosityEnabled)
     const dimensionedScalar d50(dimless, dict.get<scalar>("d50"));
     const dimensionedScalar KC(dimless, dict.get<scalar>("KC"));
 
-    // Generating Darcy-Forchheimer coefficient: F = rho*U*(a + b*|U|)
+    // Generating Darcy-Forchheimer coefficient: F = rhof*U*(a + b*|U|)
     // Shoud it be mu or muEff in the equation below?
     {
         // Darcy term
         volScalarField DarcyForchheimerCoeff
         (
-            alpha*sqr(1 - porosity)*mixture.mu()/sqr(porosity)/sqr(d50)
+            alpha*sqr(1 - porosity)*muf/sqr(porosity)/sqr(d50)
         );
 
         // Adding Forchheimer term
-        DarcyForchheimerCoeff += rho*mag(U)
+        DarcyForchheimerCoeff += rhof*mag(U)
             *beta*(1 + pos(KC)*7.5/KC)*(1 - porosity)/sqr(porosity)/d50;
 
         // Adding Darcy-Forchheimer term as implicit source term
@@ -37,8 +37,8 @@ if (porosityEnabled)
         const dimensionedScalar gamma_p(dimless, dict.get<scalar>("gamma_p"));
         const volScalarField Cm(gamma_p*(1 - porosity));
 
-        UEqn += Cm*fvm::ddt(rho, U);
-        UEqn += Cm*MRF.DDt(rho, U);
+        UEqn += Cm*fvm::ddt(rhof, U);
+//        UEqn += Cm*MRF.DDt(rhof2, U);
     }
 
     // Dividing both matrix entries and source term by porosity to compensate

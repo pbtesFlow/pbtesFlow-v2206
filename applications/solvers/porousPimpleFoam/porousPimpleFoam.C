@@ -5,12 +5,7 @@
     \\  /    A nd           | www.openfoam.com
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
-    Copyright (C) 2011-2017 OpenFOAM Foundation
-    Copyright (C) 2016 DHI
-    Copyright (C) 2017 OpenCFD Ltd.
-    Copyright (C) 2018 Johan Roenby
-    Copyright (C) 2019-2020 DLR
-    Copyright (C) 2020 OpenCFD Ltd.
+    Copyright (C) 2011-2017 Johan Roenby & Jakob Hærvig
 -------------------------------------------------------------------------------
 License
     This file is part of OpenFOAM.
@@ -31,31 +26,30 @@ License
 Application
     porousPimpleFoam
 
-Group
-    grpMultiphaseSolvers
-
 Description
-    Solver derived from interIsoFoam for incompressible flow through a porous
-    medium with which it exchanges heat.
+    Solver for incompressible flow through a porous medium with which the fluid
+    exchanges heat.
 
-    Johan Roenby
+Authors
+    Johan Roenby, Roskilde University and STROMNING APS
+    Jakob Hærvig, Aalborg University
 
 \*---------------------------------------------------------------------------*/
 
 #include "fvCFD.H"
 #include "dynamicFvMesh.H"
-#include "isoAdvection.H"
-#include "EulerDdtScheme.H"
+//#include "isoAdvection.H"
+//#include "EulerDdtScheme.H"
 #include "localEulerDdtScheme.H"
-#include "CrankNicolsonDdtScheme.H"
-#include "subCycle.H"
-#include "immiscibleIncompressibleTwoPhaseMixture.H"
-#include "incompressibleInterPhaseTransportModel.H"
+//#include "CrankNicolsonDdtScheme.H"
+//#include "subCycle.H"
+//#include "immiscibleIncompressibleTwoPhaseMixture.H"
+//#include "incompressibleInterPhaseTransportModel.H"
 #include "pimpleControl.H"
 #include "fvOptions.H"
 #include "CorrectPhi.H"
-#include "fvcSmooth.H"
-#include "dynamicRefineFvMesh.H"
+//#include "fvcSmooth.H"
+//#include "dynamicRefineFvMesh.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -89,7 +83,7 @@ int main(int argc, char *argv[])
     {
         #include "readDyMControls.H"
         #include "porousCourantNo.H"
-        #include "porousAlphaCourantNo.H"
+//        #include "porousAlphaCourantNo.H"
         #include "setDeltaT.H"
 
         ++runTime;
@@ -101,15 +95,18 @@ int main(int argc, char *argv[])
         {
             if (pimple.firstIter() || moveMeshOuterCorrectors)
             {
+/*
                 if (isA<dynamicRefineFvMesh>(mesh))
                 {
                     advector.surf().reconstruct();
                 }
+*/
 
                 mesh.update();
 
                 if (mesh.changing())
                 {
+/*
                     gh = (g & mesh.C()) - ghRef;
                     ghf = (g & mesh.Cf()) - ghRef;
 
@@ -123,6 +120,7 @@ int main(int argc, char *argv[])
                         rho.oldTime() = rho;
                         alpha2.oldTime() = alpha2;
                     }
+*/
 
                     MRF.update();
 
@@ -137,7 +135,7 @@ int main(int argc, char *argv[])
                         // Make the flux relative to the mesh motion
                         fvc::makeRelative(phi, U);
 
-                        mixture.correct();
+//                        mixture.correct();
                     }
 
                     if (checkMeshCourantNo)
@@ -147,10 +145,10 @@ int main(int argc, char *argv[])
                 }
             }
 
-            #include "alphaControls.H"
-            #include "alphaEqnSubCycle.H"
+//            #include "alphaControls.H"
+//            #include "alphaEqnSubCycle.H"
 
-            mixture.correct();
+//            mixture.correct();
 
             if (pimple.frozenFlow())
             {
@@ -164,12 +162,12 @@ int main(int argc, char *argv[])
             {
                 #include "pEqn.H"
             }
-
+/*
             if (pimple.turbCorr())
             {
                 turbulence->correct();
             }
-
+*/
             #include "TEqn.H"
         }
 

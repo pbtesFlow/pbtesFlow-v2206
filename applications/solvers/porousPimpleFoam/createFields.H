@@ -30,7 +30,7 @@ volVectorField U
 
 #include "createPhi.H"
 
-
+/*
 Info<< "Reading transportProperties\n" << endl;
 immiscibleIncompressibleTwoPhaseMixture mixture(U, phi);
 
@@ -84,10 +84,10 @@ autoPtr<transportModelType> turbulence
     )
 );
 
-
 #include "readGravitationalAcceleration.H"
 #include "readhRef.H"
 #include "gh.H"
+*/
 
 
 volScalarField p
@@ -100,7 +100,7 @@ volScalarField p
         IOobject::NO_READ,
         IOobject::AUTO_WRITE
     ),
-    p_rgh + rho*gh
+    p_rgh// + rho*gh
 );
 
 label pRefCell = 0;
@@ -122,17 +122,17 @@ if (p_rgh.needReference())
         p.dimensions(),
         pRefValue - getRefCellValue(p, pRefCell)
     );
-    p_rgh = p - rho*gh;
+    p_rgh = p;// - rho*gh;
 }
 
 mesh.setFluxRequired(p_rgh.name());
-mesh.setFluxRequired(alpha1.name());
+//mesh.setFluxRequired(alpha1.name());
 
 #include "createMRF.H"
 #include "createFvOptions.H"
 #include "createPorosity.H"
 
-isoAdvection advector(alpha1, phi, U);
+//isoAdvection advector(alpha1, phi, U);
 
 Info<< "Reading field Tf\n" << endl;
 
@@ -176,19 +176,82 @@ IOdictionary transportProperties
     )
 );
 
+dimensionedScalar rhof("rhof", dimDensity, transportProperties);
 
-Info<< "Reading diffusivity DTf\n" << endl;
+dimensionedScalar rhos("rhos", dimDensity, transportProperties);
 
-dimensionedScalar DTf("DTf", dimViscosity, transportProperties);
+Info<< "Reading thermal diffusivity of fluid kf\n" << endl;
+dimensionedScalar kf("kf", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
 
-Info<< "Reading diffusivity DTs\n" << endl;
+Info<< "Reading thermal diffusivity of stone kf\n" << endl;
+dimensionedScalar ks("ks", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
 
-dimensionedScalar DTs("DTs", dimViscosity, transportProperties);
+//Info<< "Reading heat tranfer coefficient, h (W/(m^2*K))\n" << endl;
+//dimensionedScalar h("h", dimless/dimTime, transportProperties);
+
+Info<< "Reading specific heat capacity of fluid (J/kg*K)\n" << endl;
+dimensionedScalar cpf("cpf", sqr(dimVelocity)/dimTemperature, transportProperties);
+
+Info<< "Reading specific heat capacity of stone (J/kg*K)\n" << endl;
+dimensionedScalar cps("cps", sqr(dimVelocity)/dimTemperature, transportProperties);
+
+//Info<< "Reading stone radius (assuming spheres and uniform size (m)\n" << endl;
+//dimensionedScalar rp("rp", dimLength, transportProperties);
 
 Info<< "Reading Cf\n" << endl;
 
-dimensionedScalar Cf("Cf", dimless/dimTime, transportProperties);
+dimensionedScalar Cf("Cf", dimMass/dimLength/pow3(dimTime)/dimTemperature, transportProperties);
 
 Info<< "Reading Cs\n" << endl;
 
-dimensionedScalar Cs("Cs", dimless/dimTime, transportProperties);
+dimensionedScalar Cs("Cs", dimMass/dimLength/pow3(dimTime)/dimTemperature, transportProperties);
+
+dimensionedScalar mu("mu", dimDynamicViscosity, transportProperties);
+
+dimensionedScalar Tmu
+(
+    "Tmu",
+    dimTemperature,
+    transportProperties.lookupOrDefault<scalar>("Tmu", Zero)
+);
+
+dimensionedScalar mu2
+(
+    "mu2",
+    dimDynamicViscosity,
+    transportProperties.lookupOrDefault<scalar>("mu2", Zero)
+);
+
+dimensionedScalar Tmu2
+(
+    "Tmu2",
+    dimTemperature,
+    transportProperties.lookupOrDefault<scalar>("Tmu2", Zero)
+);
+
+volScalarField muf
+(
+    IOobject
+    (
+        "muf",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mu + (mu2-mu)*(Tf-Tmu)/(Tmu2-Tmu)
+);
+
+// NOTE: THIS IS NOT USED FOR ANYTHING BUT SOMEWHERE IT IS IN THE CODE A CALL TO
+// lookupObject(rho) IS MADE. TRACK IT AND REMOVE IT!!!
+volScalarField rho
+(
+    IOobject
+    (
+        "rho",
+        runTime.timeName(),
+        mesh,
+        IOobject::READ_IF_PRESENT
+    ),
+    rhof*(1 + 0*muf/mu2)
+);
