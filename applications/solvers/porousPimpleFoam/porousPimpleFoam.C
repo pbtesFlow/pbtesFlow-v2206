@@ -47,7 +47,7 @@ Authors
 //#include "incompressibleInterPhaseTransportModel.H"
 #include "pimpleControl.H"
 #include "fvOptions.H"
-#include "CorrectPhi.H"
+#include <CorrectPhi.H>
 //#include "fvcSmooth.H"
 //#include "dynamicRefineFvMesh.H"
 
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
         runTime.printExecutionTime(Info);
     }
 
-    Info<< "End\n" << endl;
+    Info << "End\n" << endl;
 
     return 0;
 }
