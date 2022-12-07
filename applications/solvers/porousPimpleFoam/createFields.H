@@ -186,8 +186,8 @@ dimensionedScalar kf("kf", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTempera
 Info<< "Reading thermal diffusivity of stone kf\n" << endl;
 dimensionedScalar ks("ks", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
 
-//Info<< "Reading heat tranfer coefficient, h (W/(m^2*K))\n" << endl;
-//dimensionedScalar h("h", dimless/dimTime, transportProperties);
+Info<< "Reading heat tranfer coefficient, h (W/(m^2*K))\n" << endl;
+dimensionedScalar h("h", dimless/dimTime, transportProperties);
 
 Info<< "Reading specific heat capacity of fluid (J/kg*K)\n" << endl;
 dimensionedScalar cpf("cpf", sqr(dimVelocity)/dimTemperature, transportProperties);
@@ -201,10 +201,6 @@ dimensionedScalar cps("cps", sqr(dimVelocity)/dimTemperature, transportPropertie
 Info<< "Reading Cf\n" << endl;
 
 dimensionedScalar Cf("Cf", dimMass/dimLength/pow3(dimTime)/dimTemperature, transportProperties);
-
-Info<< "Reading Cs\n" << endl;
-
-dimensionedScalar Cs("Cs", dimMass/dimLength/pow3(dimTime)/dimTemperature, transportProperties);
 
 dimensionedScalar mu("mu", dimDynamicViscosity, transportProperties);
 
@@ -255,3 +251,18 @@ volScalarField rho
     ),
     rhof*(1 + 0*muf/mu2)
 );
+
+volScalarField Abed
+(
+    IOobject
+    (
+        "Abed",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    porosity
+);
+
+Info << Abed << endl;
