@@ -1,9 +1,3 @@
-//if (porosityEnabled)
-{
-//    const volScalarField& porosity = tporosity.cref();
-
-    // NOTE: ENSURE THAT dEfluid + dEsolid = 0!!!!
-
     // Fluid temperature equation
     Info << "Solving Tf equation" << endl;
     volScalarField dT(Ts-Tf);
@@ -12,10 +6,9 @@
     (
         fvm::ddt(porosity*rhof*cpf,Tf)
         + fvm::div(rhof*cpf*phi, Tf)
-        - fvm::laplacian(porosityf*kf, Tf)
+        - fvm::laplacian(kf, Tf)
         ==
-//        fvOptions(Tf)     //NOTE: MESSES UP UNITS!!!
-        fvm::Su(porosity*Cf*dT, Tf)
+        fvm::Su(h*Cf*dT, Tf)
     );
 
     TfEqn.relax();
@@ -33,10 +26,9 @@
     fvScalarMatrix TsEqn
     (
         fvm::ddt((1-porosity)*rhos*cps, Ts)
-        - fvm::laplacian((1-porosityf)*ks, Ts)
+        - fvm::laplacian(ks, Ts)
         ==
-//        fvOptions(Ts)     //NOTE: MESSES UP UNITS!!!
-        - fvm::Su((1-porosity)*Cf*dT, Ts)
+        - fvm::Su(h*Cf*dT, Ts)
 //        (1-porosity)*Cs*(Tf-Ts)
 //        (1-porosity)*Cs*rhos*cps*(Tf-Ts)
     );
@@ -45,4 +37,3 @@
     fvOptions.constrain(TsEqn);
     TsEqn.solve();
     fvOptions.correct(Ts);
-}
