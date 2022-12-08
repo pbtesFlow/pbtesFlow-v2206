@@ -16,7 +16,8 @@ FoamFile
 
 
 h       200;    //heat transfer coefficient (W/(m^2 K))
-Cf      50;     //rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+rp      0.005;  //particle radius (m)
+//Cf      50;   //rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
 
 // Fluid
 

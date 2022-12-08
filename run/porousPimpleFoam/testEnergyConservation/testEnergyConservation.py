@@ -12,4 +12,4 @@ cps = 0.1
 print("Total enthalpy:", Tf*rhof*cpf + Ts*rhos*cps)
 
 plt.plot(time,Tf*rhof*cpf, time,Ts*rhos*cps, time, (Ts*rhos*cps+Tf*rhof*cpf)/2)
-plt.show()
+plt.savefig('foo.pdf')
