@@ -8,7 +8,8 @@
         + fvm::div(rhof*cpf*phi, Tf)
         - fvm::laplacian(kf, Tf)
         ==
-        fvm::Su(h*Cf*dT, Tf)
+        fvm::Su(h*(porosity*3/rp)*dT, Tf)
+        //fvm::Su(rp, Tf)
     );
 
     TfEqn.relax();
@@ -28,7 +29,8 @@
         fvm::ddt((1-porosity)*rhos*cps, Ts)
         - fvm::laplacian(ks, Ts)
         ==
-        - fvm::Su(h*Cf*dT, Ts)
+        - fvm::Su(h*(porosity*3/rp)*dT, Ts)
+//        - fvm::Su(h*(mesh.V()*porosity*3/rp)*dT, Ts)
 //        (1-porosity)*Cs*(Tf-Ts)
 //        (1-porosity)*Cs*rhos*cps*(Tf-Ts)
     );
