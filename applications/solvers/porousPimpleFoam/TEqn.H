@@ -30,12 +30,11 @@
         - fvm::laplacian(ks, Ts)
         ==
         - fvm::Su(h*(porosity*3/rp)*dT, Ts)
-//        - fvm::Su(h*(mesh.V()*porosity*3/rp)*dT, Ts)
-//        (1-porosity)*Cs*(Tf-Ts)
-//        (1-porosity)*Cs*rhos*cps*(Tf-Ts)
+        // (1-porosity)*Cs*(Tf-Ts)
+        // (1-porosity)*Cs*rhos*cps*(Tf-Ts)
     );
 
     TsEqn.relax();
     fvOptions.constrain(TsEqn);
-    TsEqn.solve();
+//    TsEqn.solve();
     fvOptions.correct(Ts);

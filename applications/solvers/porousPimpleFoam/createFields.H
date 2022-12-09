@@ -176,14 +176,16 @@ IOdictionary transportProperties
     )
 );
 
+Info<< "Reading density of fluid phase, rhof (kg/m^3)\n" << endl;
 dimensionedScalar rhof("rhof", dimDensity, transportProperties);
 
+Info<< "Reading density of solid phase, rhof (kg/m^3)\n" << endl;
 dimensionedScalar rhos("rhos", dimDensity, transportProperties);
 
-Info<< "Reading thermal diffusivity of fluid kf\n" << endl;
+Info<< "Reading thermal conductivity of fluid phase, kf (W/(m*K))\n" << endl;
 dimensionedScalar kf("kf", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
 
-Info<< "Reading thermal diffusivity of stone kf\n" << endl;
+Info<< "Reading thermal conductivity of stone phase, kf (W/(m*K))\n" << endl;
 dimensionedScalar ks("ks", dimMass*dimLength/(dimTime*dimTime*dimTime*dimTemperature), transportProperties);
 
 Info<< "Reading heat tranfer coefficient, h (W/(m^2*K))\n" << endl;
