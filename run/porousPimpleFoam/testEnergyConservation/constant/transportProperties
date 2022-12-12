@@ -15,15 +15,14 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 
-h       10;    //heat transfer coefficient (W/(m^2 K))
-rp      0.01;  //particle radius (m)
-//Cf      50;   //rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+h       10;         //heat transfer coefficient (W/(m^2 K))
+rp      0.01;       //particle radius (m)
 
 // Fluid
 
-rhof    1.2;    //fluid density (kg/m^3)
-cpf     700;    //fluid specific heat capacity (J/(kg*K)
-kf      0.06;      //fluid thermal conductivity (W/(m*K)
+rhof    1.2;        //fluid density (kg/m^3)
+cpf     700;        //fluid specific heat capacity (J/(kg*K)
+kf      0.06;       //fluid thermal conductivity (W/(m*K)
 
 mu      1.825e-05;
 Tmu     293;
@@ -35,6 +34,6 @@ Tmu2    343;
 
 // Solid
 
-rhos    5150;   //stone density (kg/m^3)
-cps     1130;    //stone specific heat capacity (J/(kg*K)
-ks      1.9;     //stone phase effective thermal conductivity (W/(m*K)
+rhos    5150;       //stone density (kg/m^3)
+cps     1130;       //stone specific heat capacity (J/(kg*K)
+ks      1.9;        //stone phase effective thermal conductivity (W/(m*K)
