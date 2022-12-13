@@ -10,43 +10,18 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+numberOfSubdomains 4;
 
-rhof    1.2;
+method          simple;
 
-cpf     700;
+coeffs
+{
+    n           (2 2 1);
+}
 
-kf      0;
-
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
-
-mu      1.825e-05;
-
-Tmu     293;
-
-mu2     1.963e-5;
-
-Tmu2    343;
-
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
-
-// Solid
-
-rhos    3000;
-
-cps     0.1;//1130;
-
-ks      10;
-
-h       10;         //heat transfer coefficient (W/(m^2 K))
-
-rp      0.01;       //particle radius (m)
-
-//Cs      0;
 
 // ************************************************************************* //

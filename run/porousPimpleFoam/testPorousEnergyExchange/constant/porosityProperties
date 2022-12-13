@@ -10,43 +10,33 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      porosityProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+porosityModel JensenEtAl2014;
 
-rhof    1.2;
+/*
+porosityEnabled true;
 
-cpf     700;
+JensenEtAl2014Coeffs
+{
+    alpha 500;
+    beta 2;
+    gamma_p 0.34;
+    d50 0.0159;
+    KC 128;
+}
+*/
 
-kf      0;
+JensenEtAl2014Coeffs
+{
+    alpha 0;
+    beta 0;
+    gamma_p 0;
+    d50 1;
+    KC 1;
+}
 
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
-
-mu      1.825e-05;
-
-Tmu     293;
-
-mu2     1.963e-5;
-
-Tmu2    343;
-
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
-
-// Solid
-
-rhos    3000;
-
-cps     0.1;//1130;
-
-ks      10;
-
-h       10;         //heat transfer coefficient (W/(m^2 K))
-
-rp      0.01;       //particle radius (m)
-
-//Cs      0;
 
 // ************************************************************************* //

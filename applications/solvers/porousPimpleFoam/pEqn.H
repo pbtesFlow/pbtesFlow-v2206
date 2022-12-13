@@ -57,6 +57,8 @@
 
 //            U = HbyA + rAU()*fvc::reconstruct((phig - p_rghEqn.flux())/rAUf);
             U = HbyA - rAU()*fvc::reconstruct(p_rghEqn.flux()/rAUf);
+//            U = HbyA - fvc::reconstruct(p_rghEqn.flux());
+//            U = fvc::reconstruct(phi);
             U.correctBoundaryConditions();
             fvOptions.correct(U);
         }

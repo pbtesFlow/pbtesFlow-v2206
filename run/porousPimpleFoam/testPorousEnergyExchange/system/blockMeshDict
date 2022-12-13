@@ -10,43 +10,56 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      blockMeshDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+scale 1;
 
-rhof    1.2;
+x0  0;
+x1  10;
+y0  0;
+y1  10;
+z0  0;
+z1  1;
 
-cpf     700;
+vertices
+(
+    //x y z
+    ($x0 $y0 $z0)
+    ($x1 $y0 $z0)
+    ($x1 $y1 $z0)
+    ($x0 $y1 $z0)
+    ($x0 $y0 $z1)
+    ($x1 $y0 $z1)
+    ($x1 $y1 $z1)
+    ($x0 $y1 $z1)
+);
 
-kf      0;
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (40 40 1) simpleGrading (4 4 1)
+);
 
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+patches
+(
+    wall leftWall
+    (
+        (0 4 3 7)
+    )
+    wall rightWall
+    (
+        (1 2 6 5)
+    )
+    wall lowerWall
+    (
+        (0 1 5 4)
+    )
+    patch atmosphere
+    (
+        (2 3 7 6)
+    )
+);
 
-mu      1.825e-05;
-
-Tmu     293;
-
-mu2     1.963e-5;
-
-Tmu2    343;
-
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
-
-// Solid
-
-rhos    3000;
-
-cps     0.1;//1130;
-
-ks      10;
-
-h       10;         //heat transfer coefficient (W/(m^2 K))
-
-rp      0.01;       //particle radius (m)
-
-//Cs      0;
 
 // ************************************************************************* //

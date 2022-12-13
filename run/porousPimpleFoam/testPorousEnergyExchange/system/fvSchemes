@@ -10,43 +10,53 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+ddtSchemes
+{
+    default         Euler;
+}
 
-rhof    1.2;
+gradSchemes
+{
+    default         Gauss linear;
+    grad(U)         Gauss linear;
+    grad(alpha1)    Gauss linear;
+}
 
-cpf     700;
+divSchemes
+{
+    div(((rhof*phi)|interpolate(porosity)),U) Gauss linearUpwind grad(U);//Gauss limitedLinearV 1;
+//    div(rhoPhi,U)   Gauss limitedLinearV 1;
+    div(((rho*nuEff)*dev2(T(grad(U))))) Gauss upwind;//linear;
+//    div(phi,Tf)      Gauss linearUpwind grad(Tf);
+    div(((rhof*cpf)*phi),Tf) Gauss upwind;//linearUpwind grad(Tf);
+}
 
-kf      0;
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
 
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+interpolationSchemes
+{
+    default         linear;
+}
 
-mu      1.825e-05;
+snGradSchemes
+{
+    default         corrected;
+}
 
-Tmu     293;
+fluxRequired
+{
+    default         no;
+    p_rgh;
+    pcorr;
+//    alpha.water;
+}
 
-mu2     1.963e-5;
-
-Tmu2    343;
-
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
-
-// Solid
-
-rhos    3000;
-
-cps     0.1;//1130;
-
-ks      10;
-
-h       10;         //heat transfer coefficient (W/(m^2 K))
-
-rp      0.01;       //particle radius (m)
-
-//Cs      0;
 
 // ************************************************************************* //

@@ -35,3 +35,7 @@
     fvOptions.constrain(TsEqn);
     TsEqn.solve();
     fvOptions.correct(Ts);
+
+    scalar Hf = gSum(rhof*cpf*Tf*porosity*mesh.V());
+    scalar Hs = gSum(rhos*cps*Ts*(1-porosity)*mesh.V());
+    Info << "Hf = " << Hf << "; Hs = " << Hs << "; Etot = " << Hf + Hs << endl;

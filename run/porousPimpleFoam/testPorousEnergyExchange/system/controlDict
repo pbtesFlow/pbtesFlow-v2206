@@ -10,43 +10,44 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      transportProperties;
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+application     porousPimpleFoam;
 
-rhof    1.2;
+startFrom       latestTime;
 
-cpf     700;
+startTime       0;
 
-kf      0;
+stopAt          endTime;
 
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+endTime         100;
 
-mu      1.825e-05;
+deltaT          0.01;
 
-Tmu     293;
+writeControl    adjustableRunTime;
 
-mu2     1.963e-5;
+writeInterval   1;
 
-Tmu2    343;
+purgeWrite      0;
 
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
+writeFormat     ascii;
 
-// Solid
+writePrecision  16;
 
-rhos    3000;
+writeCompression off;
 
-cps     0.1;//1130;
+timeFormat      general;
 
-ks      10;
+timePrecision   6;
 
-h       10;         //heat transfer coefficient (W/(m^2 K))
+runTimeModifiable yes;
 
-rp      0.01;       //particle radius (m)
+adjustTimeStep  yes;
 
-//Cs      0;
+maxCo           0.5;
+
+maxDeltaT       1;
 
 // ************************************************************************* //

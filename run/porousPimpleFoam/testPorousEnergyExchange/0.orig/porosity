@@ -9,44 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      transportProperties;
+    class       volScalarField;
+    object      porosity;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Fluid
+dimensions      [0 0 0 0 0 0 0];
 
-rhof    1.2;
+internalField   uniform 1;
 
-cpf     700;
+boundaryField
+{
+    leftWall
+    {
+        type            calculated;
+        value           $internalField;
+    }
 
-kf      0;
+    rightWall
+    {
+        type            calculated;
+        value           $internalField;
+    }
 
-//Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
+    lowerWall
+    {
+        type            calculated;
+        value           $internalField;
+    }
 
-mu      1.825e-05;
+    atmosphere
+    {
+        type            calculated;
+        value           $internalField;
+    }
 
-Tmu     293;
+    defaultFaces
+    {
+        type            empty;
+    }
+}
 
-mu2     1.963e-5;
-
-Tmu2    343;
-
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
-
-// Solid
-
-rhos    3000;
-
-cps     0.1;//1130;
-
-ks      10;
-
-h       10;         //heat transfer coefficient (W/(m^2 K))
-
-rp      0.01;       //particle radius (m)
-
-//Cs      0;
 
 // ************************************************************************* //

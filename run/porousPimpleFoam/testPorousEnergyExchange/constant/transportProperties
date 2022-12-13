@@ -24,7 +24,7 @@ kf      0;
 
 //Cf      50; // rhof*cpf*dT/dt = Cf*(Tf-Ts) => dT ~ 1000*dt*Cp*(Tf-Ts) 
 
-mu      1.825e-05;
+mu      1e-2;//1.825e-05;
 
 Tmu     293;
 
@@ -37,16 +37,17 @@ Tmu2    343;
 
 // Solid
 
-rhos    3000;
+rhos    1;
 
-cps     0.1;//1130;
+cps     1000;//1130;
 
-ks      10;
+ks      0;
+
+//Cs      0;
 
 h       10;         //heat transfer coefficient (W/(m^2 K))
 
-rp      0.01;       //particle radius (m)
+rp      1;       //particle radius (m)
 
-//Cs      0;
 
 // ************************************************************************* //
