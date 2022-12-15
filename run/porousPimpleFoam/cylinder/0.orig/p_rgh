@@ -20,33 +20,22 @@ internalField   uniform 0;
 
 boundaryField
 {
-    leftWall
+    walls
     {
         type            fixedFluxPressure;
         value           $internalField;
     }
 
-    rightWall
+    top
     {
         type            totalPressure;
         p0              uniform 0;
     }
 
-    lowerWall
+    bottom
     {
         type            fixedFluxPressure;
         value           $internalField;
-    }
-
-    topWall
-    {
-        type            fixedFluxPressure;
-        value           $internalField;
-    }
-
-    defaultFaces
-    {
-        type            empty;
     }
 }
 

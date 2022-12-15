@@ -20,29 +20,23 @@ internalField   uniform (0 0 0);
 
 boundaryField
 {
-    leftWall
+    walls
     {
-        type            slip;
+        type                noSlip;
     }
-
-    rightWall
+    top
     {
-        type            slip;
+        type                pressureInletOutletVelocity;
+        value               uniform (0 0 0);
     }
-
-    lowerWall
+    bottom
     {
-        type            slip;
-    }
-
-   topWall
-    {
-        type            slip;
-    }
-
-    defaultFaces
-    {
-        type            empty;
+        type                flowRateInletVelocity;
+        massFlowRate        0.01;
+        extrapolateProfile  no;
+        rho                 rho;
+        rhoInlet            1.2;
+        value               uniform (0 0 0);
     }
 }
 

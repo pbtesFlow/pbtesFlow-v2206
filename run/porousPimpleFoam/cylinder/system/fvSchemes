@@ -16,7 +16,7 @@ FoamFile
 
 ddtSchemes
 {
-    default         Euler;
+    default         backward;
 }
 
 gradSchemes
@@ -28,18 +28,14 @@ gradSchemes
 
 divSchemes
 {
-    div(((rhof*phi)|interpolate(porosity)),U) Gauss linearUpwind grad(Tf);//Gauss limitedLinearV 1;
-//    div(rhoPhi,U)   Gauss limitedLinearV 1;
+    div(((rhof*phi)|interpolate(porosity)),U) Gauss linearUpwind grad(Tf);
     div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
-//    div(phi,Tf)      Gauss linearUpwind grad(Tf);
     div(((rhof*cpf)*phi),Tf) Gauss linearUpwind grad(Tf);
 }
 
 laplacianSchemes
 {
     default         Gauss linear corrected;
-//    laplacian(DTf,Tf) Gauss linear corrected;
-//    laplacian(DTs,Ts) Gauss linear corrected;
 }
 
 interpolationSchemes
@@ -57,8 +53,6 @@ fluxRequired
     default         no;
     p_rgh;
     pcorr;
-//    alpha.water;
 }
-
 
 // ************************************************************************* //

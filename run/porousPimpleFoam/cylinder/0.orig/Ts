@@ -16,33 +16,23 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 0;
+internalField   uniform 800;
 
 boundaryField
 {
-    leftWall
+    walls
     {
         type            zeroGradient;
     }
 
-    rightWall
+    top
     {
         type            zeroGradient;
     }
 
-    lowerWall
+    bottom
     {
         type            zeroGradient;
-    }
-
-    topWall
-    {
-        type            zeroGradient;
-    }
-
-    defaultFaces
-    {
-        type            empty;
     }
 }
 

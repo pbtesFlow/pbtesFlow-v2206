@@ -20,33 +20,22 @@ internalField   uniform 1;
 
 boundaryField
 {
-    leftWall
+    walls
     {
         type            calculated;
         value           $internalField;
     }
 
-    rightWall
+    top
     {
         type            calculated;
         value           $internalField;
     }
 
-    lowerWall
+    bottom
     {
         type            calculated;
         value           $internalField;
-    }
-
-    topWall
-    {
-        type            calculated;
-        value           $internalField;
-    }
-
-    defaultFaces
-    {
-        type            empty;
     }
 }
 

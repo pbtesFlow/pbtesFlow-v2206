@@ -4,19 +4,14 @@ cd "${0%/*}" || exit                                # Run from this directory
 #------------------------------------------------------------------------------
 
 restore0Dir
-
 touch case.foam
-
 python3 createMesh.py
-
 runApplication blockMesh
-
 runApplication setFields
-
-#runApplication decomposePar
-
 runApplication $(getApplication)
 
+#runApplication decomposePar
+#runParallel $(getApplication)
 #runApplication reconstructPar
 
 #------------------------------------------------------------------------------
