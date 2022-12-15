@@ -15,8 +15,8 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 
-h       10;         //heat transfer coefficient (W/(m^2 K))
-rp      0.01;       //particle radius (m)
+h       100;         //heat transfer coefficient (W/(m^2 K))
+rp      0.005;       //particle radius (m)
 
 // Fluid
 
@@ -36,4 +36,4 @@ Tmu2    343;
 
 rhos    5150;       //stone density (kg/m^3)
 cps     1130;       //stone specific heat capacity (J/(kg*K)
-ks      1.9;        //stone phase effective thermal conductivity (W/(m*K)
+ks      0;        //stone phase effective thermal conductivity (W/(m*K)

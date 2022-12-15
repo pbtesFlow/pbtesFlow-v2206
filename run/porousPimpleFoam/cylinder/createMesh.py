@@ -10,6 +10,7 @@ class pyMesh(object):
         self._reduc2 = 0.53 #Inner circle (set to self._reduc for perfect circle)
         self._grading = 5 #Grading towards walls
         self._cellDensity = 10 #Cell density in mesh
+        self._cellDensity_z = 100 # #Cell density in z-direction per meter
         
     def _create_one_level_data(self, r, theta, z):
         return [
@@ -50,15 +51,15 @@ class pyMesh(object):
     def _create_one_level_block_data(self):
 
         return [
-            "hex (0 1 5 4 8 9 13 12) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (0 1 5 4 8 9 13 12) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, self._h*self._cellDensity_z) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (1 2 6 5 9 10 14 13) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (1 2 6 5 9 10 14 13) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, self._h*self._cellDensity_z) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (2 3 7 6 10 11 15 14) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (2 3 7 6 10 11 15 14) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, self._h*self._cellDensity_z) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (3 0 4 7 11 8 12 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (3 0 4 7 11 8 12 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, self._h*self._cellDensity_z) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, self._grading, self._grading, self._grading, self._grading, 1, 1, 1, 1),
-            "hex (4 5 6 7 12 13 14 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, 0.5*self._h/(self._reduc*self._r)*self._cellDensity) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
+            "hex (4 5 6 7 12 13 14 15) porosity (%i %i %i) " % (self._cellDensity, self._cellDensity, self._h*self._cellDensity_z) + " edgeGrading (%f %f %f %f %f %f %f %f %f %f %f %f)" % (
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
         ]
 
