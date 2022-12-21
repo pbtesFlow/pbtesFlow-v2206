@@ -6,7 +6,7 @@ class pyMesh(object):
     def __init__(self, *args):       
         self._r = 0.1 #Cylinder diameter
         self._h = 0.5 #Cylinder height
-        self._cellDensity_z = 100 #Cell density in z-direction per meter
+        self._cellDensity_z = 500 #Cell density in z-direction per meter
         self.A = np.pi*self._r**2
         self.dx = np.sqrt(self.A)
         

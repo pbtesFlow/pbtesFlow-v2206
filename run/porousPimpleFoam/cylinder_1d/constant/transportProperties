@@ -14,26 +14,26 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-
-h       100;         //heat transfer coefficient (W/(m^2 K))
-rp      0.005;       //particle radius (m)
-
 // Fluid
 
 rhof    1.2;        //fluid density (kg/m^3)
 cpf     700;        //fluid specific heat capacity (J/(kg*K)
 kf      0.06;       //fluid thermal conductivity (W/(m*K)
 
-mu      1.825e-05;
-Tmu     293;
-mu2     1.963e-5;
-Tmu2    343;
+// Parameters for linear approximation of dynamic viscosity
 
-//Source for mu temperature dependency:
-//https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
+mu      1.825e-05;  //dynamic viscosity at temperature Tmu (Pa*s)
+Tmu     293;	    //temperature Tmu (K)
+mu2     1.963e-5;   //dynamic viscosity at temperature Tmu2 (Pa*s)
+Tmu2    343;	    //temperature Tmu2 (K)
 
 // Solid
 
 rhos    5150;       //stone density (kg/m^3)
 cps     1130;       //stone specific heat capacity (J/(kg*K)
-ks      0;        //stone phase effective thermal conductivity (W/(m*K)
+ks      0;          //stone phase effective thermal conductivity (W/(m*K)
+rp      0.005;      //stone radius (m)
+
+// Coupling parameters
+
+h       100;        //heat transfer coefficient (W/(m^2 K))

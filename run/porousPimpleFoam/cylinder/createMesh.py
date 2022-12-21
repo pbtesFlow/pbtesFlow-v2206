@@ -9,8 +9,8 @@ class pyMesh(object):
         self._reduc = 0.65 #Meshing parameter controller the inner circle
         self._reduc2 = 0.53 #Inner circle (set to self._reduc for perfect circle)
         self._grading = 5 #Grading towards walls
-        self._cellDensity = 10 #Cell density in mesh
-        self._cellDensity_z = 100 # #Cell density in z-direction per meter
+        self._cellDensity = 30 #Cell density in mesh
+        self._cellDensity_z = 200 # #Cell density in z-direction per meter
         
     def _create_one_level_data(self, r, theta, z):
         return [

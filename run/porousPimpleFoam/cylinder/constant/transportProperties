@@ -24,10 +24,10 @@ rhof    1.2;        //fluid density (kg/m^3)
 cpf     700;        //fluid specific heat capacity (J/(kg*K)
 kf      0.06;       //fluid thermal conductivity (W/(m*K)
 
-mu      1.825e-05;
-Tmu     293;
-mu2     1.963e-5;
-Tmu2    343;
+mu      17.15e-06;
+Tmu     0;
+mu2     43.32e-06;
+Tmu2    800;
 
 //Source for mu temperature dependency:
 //https://www.engineersedge.com/physics/viscosity_of_air_dynamic_and_kinematic_14483.htm
