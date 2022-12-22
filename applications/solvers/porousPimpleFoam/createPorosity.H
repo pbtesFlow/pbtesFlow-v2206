@@ -11,31 +11,6 @@ IOdictionary porosityProperties
     )
 );
 
-/*
-const bool porosityEnabled
-(
-    porosityProperties.getOrDefault<bool>("porosityEnabled", false)
-);
-
-
-tmp<volScalarField> tporosity;
-if (porosityEnabled)
-{
-    tporosity = tmp<volScalarField>::New
-    (
-        IOobject
-        (
-            "porosity",
-            runTime.timeName(),
-            mesh,
-            IOobject::MUST_READ,
-            IOobject::AUTO_WRITE
-        ),
-        mesh
-    );
-}
-*/
-
 volScalarField porosity
 (
     IOobject

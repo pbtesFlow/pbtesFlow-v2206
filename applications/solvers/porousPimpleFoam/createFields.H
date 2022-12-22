@@ -30,65 +30,6 @@ volVectorField U
 
 #include "createPhi.H"
 
-/*
-Info<< "Reading transportProperties\n" << endl;
-immiscibleIncompressibleTwoPhaseMixture mixture(U, phi);
-
-volScalarField& alpha1(mixture.alpha1());
-volScalarField& alpha2(mixture.alpha2());
-
-const dimensionedScalar& rho1 = mixture.rho1();
-const dimensionedScalar& rho2 = mixture.rho2();
-
-
-// Need to store rho for ddt(rho, U)
-volScalarField rho
-(
-    IOobject
-    (
-        "rho",
-        runTime.timeName(),
-        mesh,
-        IOobject::READ_IF_PRESENT
-    ),
-    alpha1*rho1 + alpha2*rho2
-);
-rho.oldTime();
-
-
-// Mass flux
-surfaceScalarField rhoPhi
-(
-    IOobject
-    (
-        "rhoPhi",
-        runTime.timeName(),
-        mesh,
-        IOobject::NO_READ,
-        IOobject::NO_WRITE
-    ),
-    fvc::interpolate(rho)*phi
-);
-
-
-typedef incompressibleInterPhaseTransportModel
-    <
-        immiscibleIncompressibleTwoPhaseMixture
-    > transportModelType;
-
-autoPtr<transportModelType> turbulence
-(
-    new transportModelType
-    (
-        rho, U, phi, rhoPhi, mixture
-    )
-);
-
-#include "readGravitationalAcceleration.H"
-#include "readhRef.H"
-#include "gh.H"
-*/
-
 
 volScalarField p
 (
@@ -126,13 +67,10 @@ if (p_rgh.needReference())
 }
 
 mesh.setFluxRequired(p_rgh.name());
-//mesh.setFluxRequired(alpha1.name());
 
 #include "createMRF.H"
 #include "createFvOptions.H"
 #include "createPorosity.H"
-
-//isoAdvection advector(alpha1, phi, U);
 
 Info<< "Reading field Tf\n" << endl;
 
@@ -207,7 +145,7 @@ dimensionedScalar Tmu
 (
     "Tmu",
     dimTemperature,
-    transportProperties.lookupOrDefault<scalar>("Tmu", Zero)
+    transportProperties.lookupOrDefault<scalar>("Tmu", One)
 );
 
 dimensionedScalar mu2

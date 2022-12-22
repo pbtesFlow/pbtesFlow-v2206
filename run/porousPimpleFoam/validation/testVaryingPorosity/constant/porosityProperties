@@ -29,8 +29,8 @@ porosityModel darcyForchheimerPorosity;
 
 darcyForchheimerPorosityCoeffs
 {
-    alpha 0;
-    beta 0;
+    alpha 1;
+    beta 1;
     gamma 0;
 }
 

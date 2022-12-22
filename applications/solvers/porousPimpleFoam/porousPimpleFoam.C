@@ -50,6 +50,7 @@ Authors
 #include <CorrectPhi.H>
 //#include "fvcSmooth.H"
 //#include "dynamicRefineFvMesh.H"
+#include "upwind.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -83,7 +84,6 @@ int main(int argc, char *argv[])
     {
         #include "readDyMControls.H"
         #include "porousCourantNo.H"
-//        #include "porousAlphaCourantNo.H"
         #include "setDeltaT.H"
 
         ++runTime;
@@ -95,33 +95,11 @@ int main(int argc, char *argv[])
         {
             if (pimple.firstIter() || moveMeshOuterCorrectors)
             {
-/*
-                if (isA<dynamicRefineFvMesh>(mesh))
-                {
-                    advector.surf().reconstruct();
-                }
-*/
 
                 mesh.update();
 
                 if (mesh.changing())
                 {
-/*
-                    gh = (g & mesh.C()) - ghRef;
-                    ghf = (g & mesh.Cf()) - ghRef;
-
-                    if (isA<dynamicRefineFvMesh>(mesh))
-                    {
-                        advector.surf().mapAlphaField();
-                        alpha2 = 1.0 - alpha1;
-                        alpha2.correctBoundaryConditions();
-                        rho == alpha1*rho1 + alpha2*rho2;
-                        rho.correctBoundaryConditions();
-                        rho.oldTime() = rho;
-                        alpha2.oldTime() = alpha2;
-                    }
-*/
-
                     MRF.update();
 
                     if (correctPhi)
@@ -135,7 +113,6 @@ int main(int argc, char *argv[])
                         // Make the flux relative to the mesh motion
                         fvc::makeRelative(phi, U);
 
-//                        mixture.correct();
                     }
 
                     if (checkMeshCourantNo)
@@ -145,11 +122,6 @@ int main(int argc, char *argv[])
                 }
             }
 
-//            #include "alphaControls.H"
-//            #include "alphaEqnSubCycle.H"
-
-//            mixture.correct();
-
             if (pimple.frozenFlow())
             {
                 continue;
@@ -158,16 +130,13 @@ int main(int argc, char *argv[])
             #include "UEqn.H"
 
             // --- Pressure corrector loop
+            label nCorr = 0;
             while (pimple.correct())
             {
                 #include "pEqn.H"
+                nCorr++;
             }
-/*
-            if (pimple.turbCorr())
-            {
-                turbulence->correct();
-            }
-*/
+
             #include "TEqn.H"
         }
 

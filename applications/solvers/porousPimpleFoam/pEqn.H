@@ -14,7 +14,6 @@
     (
         "phiHbyA",
         fvc::flux(HbyA)
-//      + MRF.zeroFilter(fvc::interpolate(rho*rAU())*fvc::ddtCorr(U, phi, Uf))
     );
     MRF.makeRelative(phiHbyA);
 
@@ -24,17 +23,7 @@
         adjustPhi(phiHbyA, U, p_rgh);
         fvc::makeAbsolute(phiHbyA, U);
     }
-/*
-    surfaceScalarField phig
-    (
-        (
-            mixture.surfaceTensionForce()
-          - ghf*fvc::snGrad(rho)
-        )*rAUf*mesh.magSf()
-    );
 
-    phiHbyA += phig;
-*/
     // Update the pressure BCs to ensure flux consistency
     constrainPressure(p_rgh, U, phiHbyA, rAUf, MRF);
 
@@ -55,10 +44,65 @@
 
             p_rgh.relax();
 
-//            U = HbyA + rAU()*fvc::reconstruct((phig - p_rghEqn.flux())/rAUf);
-            U = HbyA - rAU()*fvc::reconstruct(p_rghEqn.flux()/rAUf);
-//            U = HbyA - fvc::reconstruct(p_rghEqn.flux());
-//            U = fvc::reconstruct(phi);
+            word UReconMethod
+            (
+                pimple.dict().lookupOrDefault<word>("UReconMethod", "standard")
+            );
+
+            Info << "Reconstructing U with method: " << UReconMethod << endl;
+
+            if (UReconMethod == "standard")
+            {
+                U = HbyA - rAU()*fvc::reconstruct(p_rghEqn.flux()/rAUf);
+            }
+            else if (UReconMethod == "standard_norAU")
+            {
+                U = HbyA - fvc::reconstruct(p_rghEqn.flux());
+            }
+            else if (UReconMethod == "reconPhi")
+            {
+                U = fvc::reconstruct(phi);
+            }
+            else if (UReconMethod == "AguerreEtAl") 
+            {
+                bool UReconCorrect1stIter
+                (
+                    pimple.dict().lookupOrDefault("UReconCorrect1stIter", false)
+                );
+
+                if (nCorr > 0 || UReconCorrect1stIter)
+                {
+                    surfaceVectorField gradUfdotSf 
+                        = fvc::interpolate(fvc::grad(U)) & mesh.Sf();
+                    typedef typename outerProduct<vector, scalar>::type GradType;
+                    surfaceVectorField SfHat(mesh.Sf()/mesh.magSf());
+                    volVectorField Unew
+                    (
+                        IOobject
+                        (
+                            "Unew",
+                            phi.instance(),
+                            mesh,
+                            IOobject::NO_READ,
+                            IOobject::NO_WRITE
+                        ),
+                        inv(fvc::surfaceSum(SfHat*mesh.Sf()))
+                            &
+                            (
+                                fvc::surfaceSum(SfHat*phi)
+                            - fvc::surfaceSum(SfHat*(mesh.Cf() & gradUfdotSf))
+                            + (mesh.C() & fvc::surfaceSum(gradUfdotSf*SfHat))
+                            ),
+                        extrapolatedCalculatedFvPatchField<GradType>::typeName
+                    );
+                    U = Unew;
+                }
+                else
+                {
+                    U = fvc::reconstruct(phi);
+                }
+            }
+
             U.correctBoundaryConditions();
             fvOptions.correct(U);
         }
@@ -72,7 +116,7 @@
     // Make the fluxes relative to the mesh motion
     fvc::makeRelative(phi, U);
 
-    p == p_rgh;// + rhof*gh;
+    p == p_rgh;
 
     if (p_rgh.needReference())
     {
@@ -82,7 +126,7 @@
             p.dimensions(),
             pRefValue - getRefCellValue(p, pRefCell)
         );
-        p_rgh = p;// - rho*gh;
+        p_rgh = p;
     }
 
     if (!correctPhi)
