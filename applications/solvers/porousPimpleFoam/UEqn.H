@@ -1,6 +1,14 @@
     MRF.correctBoundaryVelocity(U);
 
-    porosityf = upwind<scalar>(mesh, phi).interpolate(porosity);
+    bool upwindPorosity
+    (
+        pimple.dict().lookupOrDefault<bool>("upwindPorosity", true)
+    );
+
+    if (upwindPorosity)
+    {
+        porosityf = upwind<scalar>(mesh, phi).interpolate(porosity);
+    }
 
     fvVectorMatrix UEqn
     (

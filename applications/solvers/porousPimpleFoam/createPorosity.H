@@ -25,3 +25,15 @@ volScalarField porosity
 );
 
 surfaceScalarField porosityf(fvc::interpolate(porosity));
+
+{
+    bool upwindPorosity
+    (
+        pimple.dict().lookupOrDefault<bool>("upwindPorosity", true)
+    );
+
+    if (upwindPorosity)
+    {
+        porosityf = upwind<scalar>(mesh, phi).interpolate(porosity);
+    }
+}
