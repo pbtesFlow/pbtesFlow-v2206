@@ -1,0 +1,13 @@
+columnAverage1
+{
+    type            columnAverage;
+    libs            (fieldFunctionObjects);
+    patches         (wall_1);
+    fields          (Tf Ts);
+
+    writeFields         false;
+    executeControl      writeTime;
+    executeInterval     1;
+    writeControl        writeTime;
+    writeInterval       1;
+}

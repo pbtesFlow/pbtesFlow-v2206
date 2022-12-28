@@ -8,16 +8,18 @@ cd "${0%/*}" || exit                                # Run from this directory
 # cylinder_1d
 # "
 
+# cases to be processed
 setups="
 cylinder_1d
 "
 
-# flags to enable setup and computations
+# flags to control setup
 setup_flag=true
 run_flag=true
+parallel_flag=false
 
-# flag to enable computations in parallel mode
-parallel=false
+# number of cores to use if parallel true
+n_processors=8
 
 #------------------------------------------------------------------------------
 
@@ -32,22 +34,24 @@ case_setup() {
     dirConstant="$dirSetupOrig/constant"
     dirSystem="$dirSetupOrig/system"
 
-    printf "# Currently processing: %s\n" "$setup"
+    printf "####    Setting up simuation: %s\n" "$setup"
 
     if [ ! -d "$dirSetup" ]
     then
-        printf "      # Creating directory: %s\n" "$dirSetup"    
+        printf "Creating directory: %s\n" "$dirSetup"    
         mkdir -p "$dirSetup"
 
         cp -aRfL "setups.orig/common/." "$dirSetup"
         cp -afL "$dirSetupOrig"/All* "$dirSetup" 2>/dev/null || :
+        cp -afL "$dirSetupOrig"/*.py "$dirSetup" 2>/dev/null || :
         [ -d "$dirOrig" ] && cp -aRfL "$dirOrig/." "$dirSetup/0.orig"
         [ -d "$dirConstant" ] && cp -aRfL "$dirConstant/." "$dirSetup/constant"
         [ -d "$dirSystem" ] && cp -aRfL "$dirSystem/." "$dirSetup/system"
     else
-        printf "      # Directory %s already exists\n" "$dirSetup"
-        printf "      # Skipping the creation of directory\n"
+        printf "Directory %s already exists\n" "$dirSetup"
+        printf "Skipping the creation of directory\n"
     fi
+    printf "\n"  
 }
 
 case_run() {
@@ -58,25 +62,26 @@ case_run() {
     dirSetup="setups/$setup"
     dirResult="results/$setup"
 
-    dry_run_setup "$setup"
     [ -d results ] || mkdir -p results
 
-    printf "\n# Run the setup: %s\n\n" "$setup"
+    printf "####    Running simuation: %s\n" "$setup"
 
     if [ ! -d "$dirResult" ]
     then
         cp -Rf "$dirSetup" "$dirResult"
 
-        if [ "$parallel" = true ]
+        ( cd "$dirResult" && ./Allrun-pre )
+        if [ "$parallel_flag" = true ]
         then
             ( cd "$dirResult" && ./Allrun-parallel )
         else
-            ( cd "$dirResult" && ./Allrun )
+            ( cd "$dirResult" && ./Allrun-serial )
         fi
+        ( cd "$dirResult" && ./Allrun-post )
 
     else
-        printf "      # Directory %s already exists\n" "$dirResult"
-        printf "      # Skipping the computation of the given setup\n"
+        printf " Directory %s already exists\n" "$dirResult"
+        printf "Skipping the computation of the given setup\n"
     fi
 }
 

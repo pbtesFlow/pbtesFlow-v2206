@@ -16,7 +16,7 @@ FoamFile
 
 defaultFieldValues
 (
-    volScalarFieldValue porosity 0.9
+    volScalarFieldValue porosity 0.6
 );
 
 regions

@@ -8,10 +8,5 @@ touch case.foam
 python3 createMesh.py
 runApplication blockMesh
 runApplication setFields
-runApplication $(getApplication)
-
-# runApplication decomposePar
-# runParallel $(getApplication)
-# runApplication reconstructPar
 
 #------------------------------------------------------------------------------

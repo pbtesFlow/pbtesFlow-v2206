@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         600;
+endTime         3;
 
 deltaT          0.01;
 
 writeControl    adjustableRunTime;
 
-writeInterval   30;
+writeInterval   1;
 
 purgeWrite      0;
 
@@ -50,21 +50,8 @@ maxCo           1;
 
 functions
 {
-    volFieldValue1
-    {
-        // Mandatory entries (unmodifiable)
-        type            volFieldValue;
-        libs            (fieldFunctionObjects);
-    
-        // Mandatory entries (runtime modifiable)
-        fields          (Tf Ts);
-        operation       average;
-        regionType      all;
-    
-        writeFields     true;
-        writeControl    writeTime;
-        writeInterval   -1;
-    }
+    #include columnAverage
+    #include volFieldValue
 }
 
 // ************************************************************************* //
