@@ -1,0 +1,26 @@
+#!/bin/bash
+
+newCases=("standard" "standard_norAU" "reconPhi" "AguerreEtAl" "AguerreEtAl_no1st")
+dict1=system/fvSolution
+var1=PIMPLE.UReconMethod
+val1s=("standard" "standard_norAU" "reconPhi" "AguerreEtAl" "AguerreEtAl")
+dict2=system/fvSolution
+var2=PIMPLE.UReconCorrect1stIter
+val2s=("true" "true" "true" "true" "false")
+for m in ${!newCases[*]}; do
+    newCase=${newCases[$m]}
+    val1=${val1s[$m]}
+    val2=${val2s[$m]}
+    echo $newCase $var1 $val1
+    rm -rf $newCase
+    cp -r baseCase $newCase
+    foamDictionary -entry $var1 -value $newCase/$dict1 -set $val1
+    foamDictionary -entry $var2 -value $newCase/$dict2 -set $val2
+    cd $newCase
+    ./Allrun &
+    cd ..
+done
+
+#cp -r baseCase AguerraEtAl_1stIterCorr
+
+#foamDictionary -entry PIMPLE.UReconMethod -value baseCase/system/fvSolution -set standard

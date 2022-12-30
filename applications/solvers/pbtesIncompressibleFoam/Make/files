@@ -1,3 +1,0 @@
-pbtesIncompressibleFoam.C
-
-EXE = $(FOAM_USER_APPBIN)/pbtesIncompressibleFoam

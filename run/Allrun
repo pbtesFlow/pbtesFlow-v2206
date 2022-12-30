@@ -1,0 +1,111 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# setups="
+# cylinder
+# cylinder_1d
+# "
+
+# cases to be processed
+setups="
+cylinder_1d
+"
+
+# flags to control setup
+setup_flag=true
+run_flag=true
+parallel_flag=false
+
+#------------------------------------------------------------------------------
+
+case_setup() {
+
+    [ $# -eq 0 ] && { echo "Usage error: $0"; exit 1; }
+
+    setup="$1"
+    dirSetup="setups/$setup"
+    dirSetupOrig="setups.orig/$setup"
+    dirOrig="$dirSetupOrig/0.orig"
+    dirConstant="$dirSetupOrig/constant"
+    dirSystem="$dirSetupOrig/system"
+
+    printf "####    Setting up simuation: %s\n" "$setup"
+
+    if [ ! -d "$dirSetup" ]
+    then
+        printf "Creating directory: %s\n" "$dirSetup"    
+        mkdir -p "$dirSetup"
+
+        cp -aRfL "setups.orig/common/." "$dirSetup"
+        cp -afL "$dirSetupOrig"/All* "$dirSetup" 2>/dev/null || :
+        cp -afL "$dirSetupOrig"/*.py "$dirSetup" 2>/dev/null || :
+        [ -d "$dirOrig" ] && cp -aRfL "$dirOrig/." "$dirSetup/0.orig"
+        [ -d "$dirConstant" ] && cp -aRfL "$dirConstant/." "$dirSetup/constant"
+        [ -d "$dirSystem" ] && cp -aRfL "$dirSystem/." "$dirSetup/system"
+    else
+        printf "Directory %s already exists\n" "$dirSetup"
+        printf "Skipping the creation of directory\n"
+    fi
+    printf "\n"  
+}
+
+case_run() {
+
+    [ $# -eq 0 ] && { echo "Usage error: $0"; exit 1; }
+
+    setup="$1"
+    dirSetup="setups/$setup"
+    dirResult="results/$setup"
+
+    [ -d results ] || mkdir -p results
+
+    printf "####    Running simuation: %s\n" "$setup"
+
+    if [ ! -d "$dirResult" ]
+    then
+        cp -Rf "$dirSetup" "$dirResult"
+
+        ( cd "$dirResult" && ./Allrun-pre )
+        if [ "$parallel_flag" = true ]
+        then
+            ( cd "$dirResult" && ./Allrun-parallel )
+        else
+            ( cd "$dirResult" && ./Allrun-serial )
+        fi
+        ( cd "$dirResult" && ./Allrun-post )
+
+    else
+        printf " Directory %s already exists\n" "$dirResult"
+        printf "Skipping the computation of the given setup\n"
+    fi
+}
+
+
+#------------------------------------------------------------------------------
+
+for setup in $setups
+
+do
+    dirSetupOrig="setups.orig/$setup"
+
+    if [ ! -d "$dirSetupOrig" ]
+    then
+        echo "Setup directory: $dirSetupOrig" \
+             "could not be found - skipping execution" 1>&2
+        continue
+    fi
+
+    if [ "$setup_flag" = true ]
+    then
+        case_setup "$setup"
+    fi
+
+    if [ "$run_flag" = true ]
+    then
+        case_run "$setup"
+    fi
+done
+
+#------------------------------------------------------------------------------
