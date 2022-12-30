@@ -50,8 +50,8 @@ maxCo           1;
 
 functions
 {
-    #include columnAverage
     #include volFieldValue
+    #include sample
 }
 
 // ************************************************************************* //

@@ -52,6 +52,7 @@ functions
 {
     #include columnAverage
     #include volFieldValue
+    #include sample
 }
 
 // ************************************************************************* //
