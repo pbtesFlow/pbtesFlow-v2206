@@ -18,9 +18,6 @@ setup_flag=true
 run_flag=true
 parallel_flag=false
 
-# number of cores to use if parallel true
-n_processors=8
-
 #------------------------------------------------------------------------------
 
 case_setup() {
