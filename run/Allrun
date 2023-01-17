@@ -6,17 +6,19 @@ cd "${0%/*}" || exit                                # Run from this directory
 # setups="
 # cylinder
 # cylinder_1d
+# cylinder_with_initial_perturbation
 # "
 
 # cases to be processed
 setups="
-cylinder_1d
+cylinder_with_initial_perturbation
 "
 
 # flags to control setup
 setup_flag=true
 run_flag=true
 parallel_flag=false
+plot_flag=true
 
 #------------------------------------------------------------------------------
 
@@ -82,6 +84,14 @@ case_run() {
     fi
 }
 
+case_plot() {
+
+    setup="$1"
+    dirPlots="results/$setup/plots"
+    [ -d "$dirPlots" ] || mkdir -p "$dirPlots"
+
+    python3 "results/$setup/plots.py"
+}
 
 #------------------------------------------------------------------------------
 
@@ -105,6 +115,11 @@ do
     if [ "$run_flag" = true ]
     then
         case_run "$setup"
+    fi
+
+    if [ "$plot_flag" = true ]
+    then
+        case_plot "$setup"
     fi
 done
 
