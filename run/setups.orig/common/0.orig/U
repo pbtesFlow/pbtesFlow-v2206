@@ -32,7 +32,7 @@ boundaryField
     bottom
     {
         type                flowRateInletVelocity;
-        massFlowRate        0.5;
+        massFlowRate        0.1;
         extrapolateProfile  no;
         rho                 rho;
         rhoInlet            1.2;

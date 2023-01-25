@@ -6,5 +6,6 @@ cd "${0%/*}" || exit                                # Run from this directory
 runApplication decomposePar
 runParallel $(getApplication)
 runApplication reconstructPar
+postProcess -func sample
 
 #------------------------------------------------------------------------------

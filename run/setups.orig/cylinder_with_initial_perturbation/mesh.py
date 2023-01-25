@@ -4,13 +4,13 @@ import os
 
 class pyMesh(object):
     def __init__(self,*args):       
-        self._r = 0.5  #Cylinder diameter
-        self._h = 5.32 #Cylinder height
+        self._r = 0.15  #Cylinder diameter
+        self._h = 0.5 #Cylinder height
         self._reduc = 0.65 #Meshing parameter controller the inner circle
         self._reduc2 = 0.53 #Inner circle (set to self._reduc for perfect circle)
         self._grading = 5 #Grading towards walls
-        self._cellDensity = 30 #Cell density in mesh
-        self._cellDensity_z = 50 # #Cell density in z-direction per meter
+        self._cellDensity = 10 #Cell density in mesh
+        self._cellDensity_z = 100 # #Cell density in z-direction per meter
         
     def _create_one_level_data(self, r, theta, z):
         return [

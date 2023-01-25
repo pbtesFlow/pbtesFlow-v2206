@@ -20,55 +20,55 @@ solvers
     {
         solver          PCG;
         preconditioner  DIC;
-        tolerance       1e-07;
-        relTol          0.1;
+        tolerance       1e-06;
+        relTol          0.5;
     }
     p_rgh
     {
         solver          PCG;
         preconditioner  DIC;
-        tolerance       1e-05;
-        relTol          0.1;
+        tolerance       1e-06;
+        relTol          0.5;
     }
     U
     {
         solver          PBiCG;
         preconditioner  DIC;
-        tolerance       1e-6;
-        relTol          0;
-    }
-    p_rghFinal
-    {
-        solver          PCG;
-        preconditioner  DIC;
         tolerance       1e-06;
-        relTol          0;
-    }
-    pcorrFinal
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-07;
-        relTol          0.1;
-    }
-    UFinal
-    {
-        solver          PBiCG;
-        preconditioner  DIC;
-        tolerance       1e-6;
-        relTol          0;
+        relTol          0.5;
     }
     Tf
     {
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-06;
-        relTol          0.1;
+        relTol          0.5;
     }
     Ts
     {
         solver          PBiCGStab;
         preconditioner  none;
+        tolerance       1e-06;
+        relTol          0.5;
+    }    
+    p_rghFinal
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-06;
+        relTol          0.1;
+    }
+    pcorrFinal
+    {
+        solver          PCG;
+        preconditioner  DIC;
+        tolerance       1e-06;
+        relTol          0.1;
+    }
+    UFinal
+    {
+        solver          PBiCG;
+        preconditioner  DIC;
         tolerance       1e-06;
         relTol          0.1;
     }
@@ -77,14 +77,14 @@ solvers
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-06;
-        relTol          0;
+        relTol          0.1;
     }
     TsFinal
     {
         solver          PBiCGStab;
         preconditioner  none;
         tolerance       1e-06;
-        relTol          0;
+        relTol          0.1;
     }
 }
 
@@ -92,7 +92,7 @@ PIMPLE
 {
     momentumPredictor no;
     nOuterCorrectors 1;
-    nCorrectors     3;
+    nCorrectors     2;
     nNonOrthogonalCorrectors 0;
     pRefCell        0;
     pRefValue       0;

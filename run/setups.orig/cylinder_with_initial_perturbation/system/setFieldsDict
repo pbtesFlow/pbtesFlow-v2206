@@ -23,7 +23,7 @@ regions
 (
     boxToCell
     {
-        box (-100 -100 -100) (100 100 1);
+        box (-100 -100 -100) (100 100 0.25);
         fieldValues
         (
             volScalarFieldValue Tf 310
@@ -33,9 +33,9 @@ regions
 
     cylinderToCell
     {
-        point1  (0 0 1);
-        point2  (0 0 1.1);
-        radius  0.05;
+        point1  (0 0 0.25);
+        point2  (0 0 0.30);
+        radius  0.015;
         fieldValues
         (
             volScalarFieldValue Tf 310

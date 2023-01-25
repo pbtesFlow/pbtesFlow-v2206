@@ -3,25 +3,19 @@ cd "${0%/*}" || exit                                # Run from this directory
 . ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
 #------------------------------------------------------------------------------
 
-# setups="
-# cylinder
-# cylinder_1d
-# cylinder_with_initial_perturbation
-# "
-
-# cases to be processed
 setups="
+cylinder_1d
+cylinder
 cylinder_with_initial_perturbation
 "
 
 # flags to control setup
 setup_flag=true
 run_flag=true
-parallel_flag=false
+parallel_flag=true
 plot_flag=true
 
 #------------------------------------------------------------------------------
-
 case_setup() {
 
     [ $# -eq 0 ] && { echo "Usage error: $0"; exit 1; }
@@ -76,7 +70,7 @@ case_run() {
         else
             ( cd "$dirResult" && ./Allrun-serial )
         fi
-        ( cd "$dirResult" && ./Allrun-post )
+
 
     else
         printf " Directory %s already exists\n" "$dirResult"

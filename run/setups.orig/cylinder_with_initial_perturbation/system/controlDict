@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         10;
+endTime         1800;
 
 deltaT          0.01;
 
 writeControl    adjustableRunTime;
 
-writeInterval   1;
+writeInterval   10;
 
 purgeWrite      0;
 
@@ -47,10 +47,5 @@ runTimeModifiable yes;
 adjustTimeStep  no;
 
 maxCo           1;
-
-functions
-{
-    #include sample
-}
 
 // ************************************************************************* //

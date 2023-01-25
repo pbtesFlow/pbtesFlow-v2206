@@ -3,6 +3,10 @@ cd "${0%/*}" || exit                                # Run from this directory
 . ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
 #------------------------------------------------------------------------------
 
-runApplication $(getApplication)
+restore0Dir
+touch case.foam
+python3 mesh.py
+runApplication blockMesh
+runApplication setFields
 
 #------------------------------------------------------------------------------

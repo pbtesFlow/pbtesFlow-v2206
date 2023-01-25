@@ -2,7 +2,7 @@ sample
 {
     type            sets;
     libs            (sampling);
-    interpolationScheme cellPoint;
+    interpolationScheme cell;
     setFormat       raw;
     executeControl  writeTime;
     writeControl    writeTime;

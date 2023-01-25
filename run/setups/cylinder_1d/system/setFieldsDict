@@ -21,27 +21,7 @@ defaultFieldValues
 
 regions
 (
-    boxToCell
-    {
-        box (-100 -100 -100) (100 100 1);
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
 
-    cylinderToCell
-    {
-        point1  (0 0 1);
-        point2  (0 0 1.1);
-        radius  0.05;
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
 );
 
 // ************************************************************************* //
