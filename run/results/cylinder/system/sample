@@ -1,0 +1,27 @@
+sample
+{
+    type            sets;
+    libs            (sampling);
+    interpolationScheme cell;
+    setFormat       raw;
+    executeControl  writeTime;
+    writeControl    writeTime;
+
+    fields
+    (
+        Tf
+        Ts
+    );
+
+    sets
+    {
+        centre
+        {
+            type            face;//midPoint;
+            axis            z;
+            start           (0 0 0);
+            end             (0 0 10);
+        }
+      
+    }
+}

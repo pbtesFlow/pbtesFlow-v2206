@@ -10,38 +10,40 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      setFieldsDict;
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-defaultFieldValues
-(
-    volScalarFieldValue porosity 0.36
-);
+application     pbtesFlow;
 
-regions
-(
-    boxToCell
-    {
-        box (-100 -100 -100) (100 100 0.20);
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
+startFrom       latestTime;
 
-    cylinderToCell
-    {
-        point1  (0 0 0.20);
-        point2  (0 0 0.30);
-        radius  0.05;
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
-);
+startTime       0;
 
-// ************************************************************************* //
+stopAt          endTime;
+
+endTime         1800;
+
+deltaT          0.01;
+
+writeControl    adjustableRunTime;
+
+writeInterval   20;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  no;
+
+maxCo           1;

@@ -9,39 +9,35 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      setFieldsDict;
+    class       volScalarField;
+    object      p_rgh;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-defaultFieldValues
-(
-    volScalarFieldValue porosity 0.36
-);
+dimensions      [1 -1 -2 0 0 0 0];
 
-regions
-(
-    boxToCell
+internalField   uniform 0;
+
+boundaryField
+{
+    walls
     {
-        box (-100 -100 -100) (100 100 0.20);
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
+        type            fixedFluxPressure;
+        value           $internalField;
     }
 
-    cylinderToCell
+    top
     {
-        point1  (0 0 0.20);
-        point2  (0 0 0.30);
-        radius  0.05;
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
+        type            totalPressure;
+        p0              uniform 0;
     }
-);
+
+    bottom
+    {
+        type            fixedFluxPressure;
+        value           $internalField;
+    }
+}
+
 
 // ************************************************************************* //

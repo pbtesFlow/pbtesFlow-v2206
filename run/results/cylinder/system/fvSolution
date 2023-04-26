@@ -21,35 +21,35 @@ solvers
         solver          PCG;
         preconditioner  DIC;
         tolerance       1e-06;
-        relTol          0.25;
+        relTol          0.5;
     }
     p_rgh
     {
         solver          PCG;
         preconditioner  DIC;
         tolerance       1e-06;
-        relTol          0.25;
+        relTol          0.5;
     }
     U
     {
         solver          PBiCG;
         preconditioner  DIC;
         tolerance       1e-06;
-        relTol          0.25;
+        relTol          0.5;
     }
     Tf
     {
         solver          PBiCGStab;
         preconditioner  DILU;
         tolerance       1e-06;
-        relTol          0.25;
+        relTol          0.5;
     }
     Ts
     {
         solver          PBiCGStab;
         preconditioner  none;
         tolerance       1e-06;
-        relTol          0.25;
+        relTol          0.5;
     }    
     p_rghFinal
     {

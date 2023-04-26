@@ -9,39 +9,36 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      setFieldsDict;
+    class       volVectorField;
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-defaultFieldValues
-(
-    volScalarFieldValue porosity 0.36
-);
+dimensions      [0 1 -1 0 0 0 0];
 
-regions
-(
-    boxToCell
-    {
-        box (-100 -100 -100) (100 100 0.20);
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
+internalField   uniform (0 0 0);
 
-    cylinderToCell
+boundaryField
+{
+    walls
     {
-        point1  (0 0 0.20);
-        point2  (0 0 0.30);
-        radius  0.05;
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
+        type                noSlip;
     }
-);
+    top
+    {
+        type                pressureInletOutletVelocity;
+        value               uniform (0 0 0);
+    }
+    bottom
+    {
+        type                flowRateInletVelocity;
+        massFlowRate        0.1;
+        extrapolateProfile  no;
+        rho                 rho;
+        rhoInlet            1.2;
+        value               uniform (0 0 0);
+    }
+}
+
 
 // ************************************************************************* //

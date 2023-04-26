@@ -10,38 +10,28 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      setFieldsDict;
+    object      porosityProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-defaultFieldValues
-(
-    volScalarFieldValue porosity 0.36
-);
+porosityModel darcyForchheimerPorosity;
 
-regions
-(
-    boxToCell
-    {
-        box (-100 -100 -100) (100 100 0.20);
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
+// Darcy-Forchheimer force of the form:
+//
+//      F = alpha*muf*n^dpp*(1-n)^d1mpp*U + beta*rhof*n^fpp*(1-n)^f1mpp*|U|*U
+//
+// where muf and rhof are fluid viscosity and denisty.
+// An added mass term of the form:
+//
+//      gamma*(1 - porosity)*ddt(rhof, U)
+//
+// can also be added to the momentum equation.
 
-    cylinderToCell
-    {
-        point1  (0 0 0.20);
-        point2  (0 0 0.30);
-        radius  0.05;
-        fieldValues
-        (
-            volScalarFieldValue Tf 310
-            volScalarFieldValue Ts 310
-        );
-    }
-);
+darcyForchheimerPorosityCoeffs
+{
+    alpha 0;
+    beta 0;
+    gamma 0;
+}
 
 // ************************************************************************* //
